@@ -17,6 +17,7 @@
         <module>eureka</module>
         <module>springcloud</module>
         <module>medicine</module>
+        <module>zuul</module>
     </modules>
     <repositories>
         <repository>
