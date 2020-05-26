@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue监听测试
+    </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+Hello World!
+<input style="border:1px black solid">
+<button>我是按钮</button>
+</input>
+<div id="app">
+    <el-radio-group v-model="testBean.selectId" @change="changeRight">
+        <el-radio v-for="(item,index) in testList1" :label="item.itemVal">
+            {{item.colNameCn}}
+        </el-radio>
+    </el-radio-group>
+    <el-radio-group v-model="testBean.testId">
+        <el-radio-button v-for="(item,index) in testList" :label="item.itemVal"
+                         :disabled="item.disabled">
+        </el-radio-button>
+    </el-radio-group>
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            testList: [],
+            testList1: [],
+            testBean: {
+                testId: "01",
+                selectId: '1'
+            }
+        },
+        methods: {
+            initData: function () {
+                $.get({
+                    url: document.location.href + "getList",
+                    success: function (r) {
+                        vm.testList1 = r.dic;
+                        vm.testList = r.result;
+                        vm.testList.forEach((obj) => {
+                            obj.disabled = false;
+                        })
+                    }
+                })
+            },
+            changeRight: function () {
+                if (vm.testBean.selectId == '1') {
+                    vm.testList.forEach((obj) => {
+                        if (obj.itemVal == '01') obj.disabled = true;
+                    })
+                }
+                if (vm.testBean.selectId == '0') {
+                    vm.testList.forEach((obj) => {
+                        if (obj.itemVal == '02') obj.disabled = true;
+                    })
+                }
+            }
+        },
+        created: function () {
+            this.initData();
+        }
+    });
+</script>
+</html>

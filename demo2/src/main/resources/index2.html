@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var arr, reg = new RegExp("(^| )" + "name" + "=([^;]*)(;|$)");
+            if (arr = document.cookie.match(reg)) {
+                console.log(arr[2]);
+                return unescape(arr[2]);
+            } else {
+                return null;
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
