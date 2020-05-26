@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @Author Mochi
- * @Description TODO
+ * @Description springboot启动入口类
  * @Date 19:46 2020/4/20
  * @Param
  * @Return

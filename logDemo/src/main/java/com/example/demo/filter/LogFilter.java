@@ -2,6 +2,7 @@ package com.example.demo.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -13,16 +14,17 @@ import javax.servlet.http.HttpServletRequest;
  * @Date 2020/5/26 10:37
  * @Name LogFilter
  */
+@WebFilter(urlPatterns = {"/*"})
+@Configuration
 @Slf4j
-@WebFilter(value = "/*")
 public class LogFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        log.info("filter init");
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain){
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) {
         this.insertMDC(servletRequest);
         try {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -33,6 +35,7 @@ public class LogFilter implements Filter {
 
     @Override
     public void destroy() {
+        log.info("filter destroy");
 
     }
 
