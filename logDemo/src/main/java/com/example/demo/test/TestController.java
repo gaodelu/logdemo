@@ -25,7 +25,7 @@ public class TestController {
     @GetMapping("/getList")
     @ResponseBody
     public Map<String, Object> queryList() {
-        TraceIdUtils.updateTraceId(null);
+        //TraceIdUtils.updateTraceId(null);
         log.info("进入getList方法");
         Map<String, Object> result = new HashMap<>();
         List<DicTest> list = new ArrayList<DicTest>();

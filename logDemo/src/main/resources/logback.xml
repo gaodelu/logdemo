@@ -5,6 +5,7 @@
 <configuration debug="true" scan="true" scanPeriod="30 seconds">
     <property name="APP_NAME" value="MOCHI"></property>
     <property name="PROJECT_NAME" value="logback-demo"></property>
+    <property name="PROJECT_NAME_PRESSURE" value="logback-demo-shadow"></property>
     <conversionRule conversionWord="TRACE_ID" converterClass="com.example.demo.LogConfig.LogConvert"></conversionRule>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -33,7 +34,7 @@
     <appender name="console-test" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>
-                [${APP_NAME}][${PROJECT_NAME}][%d{yyyy-MM-dd'T'HH:mm:ss:SSS'Z',UTC}][%X{pressureShadow}][%TRACE_ID] -- %msg%n
+                [${APP_NAME}][${PROJECT_NAME_PRESSURE}][%d{yyyy-MM-dd'T'HH:mm:ss:SSS'Z',UTC}][%X{pressureShadow}][%TRACE_ID] -- %msg%n
             </pattern>
         </encoder>
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
