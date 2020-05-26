@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- debug:设置为true时，将打印logback内部日志信息;
+     scan:配置文件发生变更,会被重新加载;
+     scanPeriod:设置监测配置文件是否有修改的间隔时间,默认1min-->
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <property name="APP_NAME" value="MOCHI"></property>
+    <property name="PROJECT_NAME" value="logback-demo"></property>
+    <conversionRule conversionWord="TRACE_ID" converterClass="com.example.demo.LogConfig.LogConvert"></conversionRule>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                [${APP_NAME}][${PROJECT_NAME}][%TRACE_ID] -- %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <expression>return !"1".equals(mdc.get("pressureShadow"));</expression>
+            </evaluator>
+            <!--
+            onMatch="ACCEPT" 表示匹配该级别及以上
+            onMatch="DENY" 表示不匹配该级别及以上
+            onMatch="NEUTRAL" 表示该级别及以上的，由下一个filter处理，如果当前是最后一个，则表示匹配该级别及以上
+            onMismatch="ACCEPT" 表示匹配该级别以下
+            onMismatch="NEUTRAL" 表示该级别及以下的，由下一个filter处理，如果当前是最后一个，则不匹配该级别以下的
+            onMismatch="DENY" 表示不匹配该级别以下的
+            -->
+            <onMatch>NEUTRAL</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+    </appender>
+
+    <appender name="console-test" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                [${APP_NAME}][${PROJECT_NAME}][%d{yyyy-MM-dd'T'HH:mm:ss:SSS'Z',UTC}][%X{pressureShadow}][%TRACE_ID] -- %msg%n
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <expression>return "1".equals(mdc.get("pressureShadow"));</expression>
+            </evaluator>
+            <onMatch>NEUTRAL</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="console-test"/>
+    </root>
+</configuration>
